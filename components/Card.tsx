@@ -4,6 +4,7 @@ import Head from "next/head";
 import { Div, Btn } from "../styles/Elements";
 import Footer from "./Footer";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 type Props = {
   title?: string;
@@ -38,7 +39,17 @@ const Layout = ({
           bg="#4777e0"
           border="1px solid #14131328 !important"
           onClick={() => {
-            navigator.clipboard.writeText(link), alert(`Link ${link} copiado`);
+            navigator.clipboard.writeText(link),
+              Swal.fire({
+                title: `Link ${link} copiado`,
+                confirmButtonText: "Ok",
+                customClass: {
+                  actions: "my-actions",
+                  cancelButton: "order-1 right-gap",
+                  confirmButton: "order-2",
+                  denyButton: "order-3",
+                },
+              });
           }}
         >
           Copiar link

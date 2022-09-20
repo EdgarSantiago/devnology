@@ -6,6 +6,7 @@ import { Div } from "../../styles/Elements";
 import Layout from "../../components/Layout";
 import Card from "../../components/Card";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 type typeLink = {
   label: string;
@@ -28,10 +29,25 @@ const BlogPost = ({
 
   const handleDelete = async (id?: string) => {
     try {
-      if (window.confirm("Are you sure")) {
-        await axios.delete("http://localhost:3000/api/links/" + id);
-      }
-      router.push(`/`);
+      Swal.fire({
+        title: "Você quer deletar esse link?",
+        showDenyButton: true,
+        confirmButtonText: "Yes",
+        denyButtonText: "No",
+        customClass: {
+          actions: "my-actions",
+          cancelButton: "order-1 right-gap",
+          confirmButton: "order-2",
+          denyButton: "order-3",
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios.delete("http://localhost:3000/api/links/" + id);
+          router.push(`/`);
+        } else if (result.isDenied) {
+          Swal.fire("O link não foi deletado", "", "info");
+        }
+      });
     } catch (err) {
       console.log(err);
     }

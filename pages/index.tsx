@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 type typeLink = {
   label: string;
@@ -27,10 +28,26 @@ const Home: NextPage<Data> = (data) => {
   const [linkList, setLinkList] = useState(data.links);
   const handleDelete = async (id?: string) => {
     try {
-      if (window.confirm("Are you sure")) {
-        const res = await axios.delete("http://localhost:3000/api/links/" + id);
-        setLinkList(linkList.filter((link) => link._id !== id));
-      }
+      Swal.fire({
+        title: "Você quer deletar esse link?",
+        showDenyButton: true,
+        confirmButtonText: "Yes",
+        denyButtonText: "No",
+        customClass: {
+          actions: "my-actions",
+          cancelButton: "order-1 right-gap",
+          confirmButton: "order-2",
+          denyButton: "order-3",
+        },
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios.delete("http://localhost:3000/api/links/" + id);
+          setLinkList(linkList.filter((link) => link._id !== id));
+          Swal.fire("Link deletado", "", "success");
+        } else if (result.isDenied) {
+          Swal.fire("O link não foi deletado", "", "info");
+        }
+      });
     } catch (err) {
       console.log(err);
     }
@@ -69,8 +86,8 @@ const Home: NextPage<Data> = (data) => {
             <Div className="col-4" key={index}>
               <Card
                 id={l._id}
-                title={l.link}
-                link={l.label}
+                title={l.label}
+                link={l.link}
                 deleteLink={handleDelete}
               />
             </Div>
