@@ -15,7 +15,7 @@ type Props = {
 const Layout = ({
   title = "This is the default title",
   link = "somelink",
-  id = "somelink",
+  id,
   deleteLink,
 }: Props) => {
   return (
@@ -23,9 +23,10 @@ const Layout = ({
       <div className="card-body">
         <h5 className="card-title mb-1">{title}</h5>
         <p className="mb-1">{link}</p>
+
         <Link href={`/link/${id}`}>
           <Btn
-            className="btn btn-outline-light mx-auto py-0"
+            className="btn btn-outline-light me-1 mx-auto py-0"
             bg="#4777e0"
             border="1px solid #14131328 !important"
           >
@@ -33,7 +34,7 @@ const Layout = ({
           </Btn>
         </Link>
         <Btn
-          className="btn btn-outline-light ms-1 py-0"
+          className="btn btn-outline-light me-1 py-0"
           bg="#4777e0"
           border="1px solid #14131328 !important"
           onClick={() => {
@@ -43,7 +44,7 @@ const Layout = ({
           Copiar link
         </Btn>
         <Btn
-          className="btn btn-outline-light ms-1 py-0"
+          className="btn btn-outline-light py-0"
           bg="#e04747"
           border="1px solid #14131328 !important"
           onClick={() => deleteLink(id)}

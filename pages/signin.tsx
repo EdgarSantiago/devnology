@@ -5,7 +5,7 @@ import Layout from "../components/Layout";
 import { Btn, Div } from "../styles/Elements";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const SignIn: NextPage = () => {
   return (
@@ -38,10 +38,12 @@ export default SignIn;
 export function SignInComponent() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [submited, setSubmted] = useState(false);
   const [error, setError] = useState(false);
   const router = useRouter();
 
-  const handleClick = async () => {
+  const handleClick = async (e: any) => {
+    e.preventDefault();
     try {
       await axios.post("http://localhost:3000/api/login", {
         username,

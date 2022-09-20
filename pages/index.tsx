@@ -8,6 +8,7 @@ import { Div, Btn } from "../styles/Elements";
 import { useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 type typeLink = {
   label: string;
@@ -22,12 +23,14 @@ interface Data {
 }
 
 const Home: NextPage<Data> = (data) => {
-  const [close, setClose] = useState(true);
+  const [close, setClose] = useState(false);
   const [linkList, setLinkList] = useState(data.links);
   const handleDelete = async (id?: string) => {
     try {
-      const res = await axios.delete("http://localhost:3000/api/links/" + id);
-      setLinkList(linkList.filter((link) => link._id !== id));
+      if (window.confirm("Are you sure")) {
+        const res = await axios.delete("http://localhost:3000/api/links/" + id);
+        setLinkList(linkList.filter((link) => link._id !== id));
+      }
     } catch (err) {
       console.log(err);
     }
@@ -105,18 +108,29 @@ export function AddLinkComponent() {
   const [label, setLabel] = useState("");
   const [link, setLink] = useState("");
   const [error, setError] = useState(false);
+  const router = useRouter();
 
-  const handleCreate = async () => {
+  const handleCreate = async (e: any) => {
+    e.preventDefault();
     try {
       const newProduct = {
         label,
         link,
       };
-      await axios.post("http://localhost:3000/api/links", newProduct);
+      const res = await axios.post(
+        "http://localhost:3000/api/links",
+        newProduct
+      );
+
+      if (res.data.status === "success") {
+        router.push(`/link/${res.data.links._id}`);
+      }
     } catch (err) {
       console.log(err);
     }
   };
+
+  useEffect(() => {}, []);
 
   return (
     <Div width="25%">

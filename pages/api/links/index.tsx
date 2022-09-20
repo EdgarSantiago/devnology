@@ -37,7 +37,6 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     }
     try {
       const link = await Link.create(req.body);
-      console.log(req.body);
       res.status(201).json({ links: link, status: "success" });
     } catch (err: any) {
       res.status(500).json(err);
