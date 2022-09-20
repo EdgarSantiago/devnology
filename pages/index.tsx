@@ -11,6 +11,8 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 
+import { AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
+
 type typeLink = {
   label: string;
   link: string;
@@ -26,6 +28,8 @@ interface Data {
 const Home: NextPage<Data> = (data) => {
   const [close, setClose] = useState(false);
   const [linkList, setLinkList] = useState(data.links);
+  const router = useRouter();
+
   const handleDelete = async (id?: string) => {
     try {
       Swal.fire({
@@ -53,19 +57,38 @@ const Home: NextPage<Data> = (data) => {
     }
   };
 
+  const handleImport = async (e: any) => {
+    e.preventDefault();
+    await axios.post("http://localhost:3000/api/links/import");
+    router.reload();
+  };
+
   return (
     <Layout>
       <Div className="container p-3" style={{ minHeight: "100vh" }}>
         <Div className="row">
-          <h3>
-            Seus links{" "}
-            <span
-              className="btn btn-outline-success py-1"
-              onClick={() => setClose(!close)}
-            >
-              {close ? "x" : "+"}
-            </span>
-          </h3>
+          <Div className="col-6">
+            <h3>
+              Seus links{" "}
+              <span
+                className="btn btn-outline-danger py-0 px-1"
+                onClick={() => setClose(!close)}
+              >
+                {close ? <AiOutlineClose /> : <AiOutlinePlus />}
+              </span>
+            </h3>
+          </Div>
+          <Div className="col-6 text-end">
+            <h3>
+              Importar{" "}
+              <span
+                onClick={handleImport}
+                className="btn btn-outline-warning py-0 px-1"
+              >
+                <AiOutlinePlus />
+              </span>
+            </h3>
+          </Div>
         </Div>
 
         <AnimatePresence>
@@ -83,11 +106,12 @@ const Home: NextPage<Data> = (data) => {
 
         <Div className="row g-2">
           {linkList.map((l, index) => (
-            <Div className="col-4" key={index}>
+            <Div className="col-12 col-md-4" key={index}>
               <Card
                 id={l._id}
                 title={l.label}
                 link={l.link}
+                edit={true}
                 deleteLink={handleDelete}
               />
             </Div>
@@ -147,10 +171,8 @@ export function AddLinkComponent() {
     }
   };
 
-  useEffect(() => {}, []);
-
   return (
-    <Div width="25%">
+    <Div width="80%" widthmd="25%">
       <form onSubmit={handleCreate}>
         <Div className="mb-2">
           <label className="form-label mb-1">Titulo</label>
@@ -160,7 +182,7 @@ export function AddLinkComponent() {
             onChange={(e) => setLabel(e.target.value)}
           />
         </Div>
-        <Div className="mb-2">
+        <Div className="mb-3">
           <label className="form-label mb-1">Link</label>
           <input
             type="text"

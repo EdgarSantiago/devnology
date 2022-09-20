@@ -5,9 +5,11 @@ import { Div, Btn } from "../styles/Elements";
 import Footer from "./Footer";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { AiFillCopy, AiFillEdit, AiTwotoneDelete } from "react-icons/ai";
 
 type Props = {
   title?: string;
+  edit?: boolean;
   link?: string;
   id?: string;
   deleteLink?: any;
@@ -17,6 +19,7 @@ const Layout = ({
   title = "This is the default title",
   link = "somelink",
   id,
+  edit,
   deleteLink,
 }: Props) => {
   return (
@@ -25,15 +28,19 @@ const Layout = ({
         <h5 className="card-title mb-1">{title}</h5>
         <p className="mb-1">{link}</p>
 
-        <Link href={`/link/${id}`}>
-          <Btn
-            className="btn btn-outline-light me-1 mx-auto py-0"
-            bg="#4777e0"
-            border="1px solid #14131328 !important"
-          >
-            Ver
-          </Btn>
-        </Link>
+        {edit ? (
+          <Link href={`/link/${id}`}>
+            <Btn
+              className="btn btn-outline-light me-1 mx-auto py-0"
+              bg="#5a5f6b"
+              border="1px solid #57525228 !important"
+            >
+              <AiFillEdit /> Editar
+            </Btn>
+          </Link>
+        ) : (
+          <></>
+        )}
         <Btn
           className="btn btn-outline-light me-1 py-0"
           bg="#4777e0"
@@ -52,15 +59,15 @@ const Layout = ({
               });
           }}
         >
-          Copiar link
+          <AiFillCopy /> Copiar link
         </Btn>
         <Btn
           className="btn btn-outline-light py-0"
-          bg="#e04747"
+          bg="#eb5050"
           border="1px solid #14131328 !important"
           onClick={() => deleteLink(id)}
         >
-          Deletar
+          <AiTwotoneDelete /> Deletar
         </Btn>
       </div>
     </Div>

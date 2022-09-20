@@ -2,7 +2,7 @@ import type { ReactElement } from "react";
 import type { NextPage } from "next";
 import type { GetStaticProps, GetStaticPaths } from "next";
 import axios from "axios";
-import { Div } from "../../styles/Elements";
+import { Div, Btn } from "../../styles/Elements";
 import Layout from "../../components/Layout";
 import Card from "../../components/Card";
 import { useRouter } from "next/router";
@@ -55,20 +55,40 @@ const BlogPost = ({
 
   return (
     <Layout>
-      <Div
-        className="container"
-        widthmd="32rem"
-        height="100vh"
-        style={{ minHeight: "100vh" }}
-      >
+      <Div className="container" widthmd="32rem" height="80vh">
         <Div className="row" height="100%">
-          <Div className="col align-self-center">
-            <Card
-              title={label}
-              link={link}
-              id={_id}
-              deleteLink={handleDelete}
-            />
+          <Div className="col-12 align-self-center card">
+            <form>
+              <Div className="mb-2 text-center">
+                <h3>Editar</h3>
+              </Div>
+              <Div className="mb-2">
+                <label className="form-label mb-1">Titulo</label>
+                <input type="text" className="form-control py-1" />
+              </Div>
+              <Div className="mb-3">
+                <label className="form-label mb-1">Link</label>
+                <input type="text" className="form-control py-1" />
+              </Div>
+              <Btn
+                type="submit"
+                className="btn btn-outline-light d-block w-100 mx-auto py-1"
+                br="15px"
+                bg="#4777e0"
+                border="1px solid #14131352 !important"
+              >
+                Atualizar
+              </Btn>
+              <Btn
+                type="submit"
+                className="btn btn-outline-light d-block w-100 mx-auto py-1 mt-2"
+                br="15px"
+                bg="#eb5050"
+                border="1px solid #14131352 !important"
+              >
+                Deletar
+              </Btn>
+            </form>
           </Div>
         </Div>
       </Div>

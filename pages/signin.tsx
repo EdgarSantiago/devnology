@@ -16,14 +16,12 @@ const SignIn: NextPage = () => {
             className="col-7"
             style={{
               backgroundImage: "url(/bg.jpg)",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "end",
-              backgroundAttachment: "fixed",
-              backgroundSize: "100%",
             }}
           />
           <Div className="col-5 px-4 align-self-center">
-            <h1 className="display-3 mb-5">Happening now</h1>
+            <h1 className="display-3 mb-5" style={{ color: "#4777e0" }}>
+              Happening now
+            </h1>
             <h1 className="mb-4">Entrar</h1>
             <SignInComponent />
           </Div>
@@ -66,7 +64,7 @@ export function SignInComponent() {
             onChange={(e) => setUsername(e.target.value)}
           />
         </Div>
-        <Div className="mb-2">
+        <Div className="mb-3">
           <label className="form-label mb-1">Senha</label>
           <input
             type="password"

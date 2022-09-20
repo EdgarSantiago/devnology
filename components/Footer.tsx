@@ -8,7 +8,7 @@ import {
 } from "react-icons/ai";
 
 const Footer = () => (
-  <div className="container-fluid">
+  <div className="container">
     <footer className="d-flex flex-wrap justify-content-between align-items-center py-2 border-top">
       <div className="col-md-8 d-flex align-items-center">
         <h4 className="mb-2 me-2 mb-md-0 lh-1">
@@ -21,16 +21,20 @@ const Footer = () => (
         </span>
       </div>
 
-      <ul className="nav col-md-4 justify-content-end list-unstyled d-flex">
+      <ul className="nav col-12 col-md-4 justify-content-end list-unstyled d-flex">
         <li className="ms-3">
-          <h3 className="mb-2  mb-md-0 lh-1">
-            <AiFillGithub />
-          </h3>
+          <Link href="https://github.com/EdgarSantiago">
+            <h3 className="mb-2  mb-md-0 lh-1 click">
+              <AiFillGithub />
+            </h3>
+          </Link>
         </li>
         <li className="ms-3">
-          <h3 className="mb-2 me-2 mb-md-0 lh-1">
-            <AiFillLinkedin />
-          </h3>
+          <Link href="https://www.linkedin.com/in/edgar-santiago-2ba816165/">
+            <h3 className="mb-2 me-2 mb-md-0 lh-1 click">
+              <AiFillLinkedin />
+            </h3>
+          </Link>
         </li>
       </ul>
     </footer>

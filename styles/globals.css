@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
 html,
 body {
   padding: 0;
   margin: 0;
   background-color: #edf1f5 !important;
+  font-family: 'Abel', sans-serif !important;
+
 }
 
 ::-webkit-scrollbar {
@@ -24,4 +27,8 @@ body {
 a{
   text-decoration: none !important;
   color: #4777e0 !important
+}
+
+.click{
+  cursor: pointer;
 }
