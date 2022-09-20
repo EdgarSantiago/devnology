@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 
 const SignIn: NextPage = () => {
   return (
-    <Layout>
+    <Layout title="Entrar">
       <Div className="container-fluid" height="100vh">
         <Div className="row" height="100%">
           <Div

@@ -17,8 +17,9 @@ interface Data {
 
 export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { method, cookies } = req;
-
   const token = cookies.token;
+
+  const link = req.body.link;
 
   dbConnect();
 
@@ -32,15 +33,27 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         ),
       ];
 
-      axios.get("https://devgo.com.br/").then(({ data }) => {
+      axios.get(link).then(({ data }) => {
         const $ = cheerio.load(data);
         const links = extractLinks($);
 
         links.forEach((element) => {
           //Joga os links puxados para o DB
-          Link.create({ link: String(element), label: "default" });
+          //Link.findOne(
+          //  { link: String(element) },
+          //  function (err: any, link: typeLink) {
+          //    if (err) return err;
+          //    console.log(link);
+          //  }
+          //);
+
+          const elLink = Link.findOne({ link: String(element) });
+
+          //Link.create({ link: String(element), label: "default" });
         });
-        res.status(201);
+        res
+          .status(201)
+          .json({ links: [{ label: "", link: "" }], status: "success" });
       });
     } catch (err: any) {
       res.status(500).json(err);

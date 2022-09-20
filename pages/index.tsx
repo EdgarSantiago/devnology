@@ -27,6 +27,7 @@ interface Data {
 
 const Home: NextPage<Data> = (data) => {
   const [close, setClose] = useState(false);
+  const [close2, setClose2] = useState(false);
   const [linkList, setLinkList] = useState(data.links);
   const router = useRouter();
 
@@ -64,10 +65,10 @@ const Home: NextPage<Data> = (data) => {
   };
 
   return (
-    <Layout>
+    <Layout title="Início">
       <Div className="container p-3" style={{ minHeight: "100vh" }}>
         <Div className="row">
-          <Div className="col-6">
+          <Div className="col-12">
             <h3>
               Seus links{" "}
               <span
@@ -85,15 +86,21 @@ const Home: NextPage<Data> = (data) => {
                 )}
               </span>
             </h3>
-          </Div>
-          <Div className="col-6 text-end">
             <h3>
               Importar{" "}
               <span
-                onClick={handleImport}
-                className="btn btn-outline-warning py-0 px-1"
+                className="btn btn-outline-danger py-0 px-1"
+                onClick={() => setClose2(!close2)}
               >
-                <AiOutlinePlus />
+                {close2 ? (
+                  <>
+                    Fechar <AiOutlineClose />
+                  </>
+                ) : (
+                  <>
+                    Importar <AiOutlinePlus />
+                  </>
+                )}
               </span>
             </h3>
           </Div>
@@ -108,6 +115,19 @@ const Home: NextPage<Data> = (data) => {
               exit={{ height: "0px", opacity: 0 }}
             >
               <AddLinkComponent />
+            </Div>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {close2 && (
+            <Div
+              className="row"
+              initial={{ opacity: 0, height: "0px" }}
+              animate={{ height: "20vh", opacity: 1 }}
+              exit={{ height: "0px", opacity: 0 }}
+            >
+              <ImportLinkComponent />
             </Div>
           )}
         </AnimatePresence>
@@ -153,6 +173,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   };
 };
 
+// componente para adicionar Link ao DB
 export function AddLinkComponent() {
   const [label, setLabel] = useState("");
   const [link, setLink] = useState("");
@@ -206,6 +227,56 @@ export function AddLinkComponent() {
           border="1px solid #14131352 !important"
         >
           Adicionar
+        </Btn>
+      </form>
+    </Div>
+  );
+}
+
+// componente para importar Links ao DB
+export function ImportLinkComponent() {
+  const [link, setLink] = useState("");
+  const router = useRouter();
+
+  const handleCreate = async (e: any) => {
+    e.preventDefault();
+    try {
+      const newProduct = {
+        link,
+      };
+      const res = await axios.post(
+        "http://localhost:3000/api/links/import",
+        newProduct
+      );
+
+      if (res.data.status === "success") {
+        router.reload();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return (
+    <Div width="80%" widthmd="25%">
+      <form onSubmit={handleCreate}>
+        <Div className="mb-3">
+          <label className="form-label mb-1">Link</label>
+          <input
+            type="text"
+            className="form-control py-1"
+            onChange={(e) => setLink(e.target.value)}
+            placeholder="Exemplo: https://devgo.com.br/"
+          />
+        </Div>
+        <Btn
+          type="submit"
+          className="btn btn-outline-light d-block w-100 mx-auto py-1"
+          br="15px"
+          bg="#4777e0"
+          border="1px solid #14131352 !important"
+        >
+          Importar
         </Btn>
       </form>
     </Div>

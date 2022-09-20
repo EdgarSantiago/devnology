@@ -54,7 +54,7 @@ const BlogPost = ({
   };
 
   return (
-    <Layout>
+    <Layout title={label}>
       <Div className="container" widthmd="32rem" height="80vh">
         <Div className="row" height="100%">
           <Div className="col-12 align-self-center card">
