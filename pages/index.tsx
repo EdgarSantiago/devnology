@@ -74,7 +74,15 @@ const Home: NextPage<Data> = (data) => {
                 className="btn btn-outline-danger py-0 px-1"
                 onClick={() => setClose(!close)}
               >
-                {close ? <AiOutlineClose /> : <AiOutlinePlus />}
+                {close ? (
+                  <>
+                    Fechar <AiOutlineClose />
+                  </>
+                ) : (
+                  <>
+                    Adicionar <AiOutlinePlus />
+                  </>
+                )}
               </span>
             </h3>
           </Div>
