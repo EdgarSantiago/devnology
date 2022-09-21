@@ -36,7 +36,7 @@ const Home: NextPage<DataLinks> = (data) => {
         },
       }).then((result) => {
         if (result.isConfirmed) {
-          axios.delete("http://localhost:3000/api/links/" + id);
+          axios.delete(`${process.env.URL}/api/links/${id}`);
           setLinkList(linkList.filter((link) => link._id !== id));
           Swal.fire("Link deletado", "", "success");
         } else if (result.isDenied) {
@@ -148,7 +148,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const linksRes = await axios.get("http://localhost:3000/api/links");
+  const linksRes = await axios.get(`http://localhost:3000/api/links`);
   const data = JSON.parse(JSON.stringify(linksRes.data));
   return {
     props: {
@@ -230,7 +230,7 @@ export function ImportLinkComponent() {
         link,
       };
       const res = await axios.post(
-        "http://localhost:3000/api/links/import",
+        `${process.env.URL}/api/links/import`,
         importIt
       );
       if (res.data.status === "success") {

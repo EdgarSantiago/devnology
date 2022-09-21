@@ -16,7 +16,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<DataLinks>) => {
       const links = await Link.find();
       res.status(200).json({ links: links, status: "success" });
     } catch (err: any) {
-      res.status(500).send(err);
+      res.status(500).send(err.message);
     }
   }
 
