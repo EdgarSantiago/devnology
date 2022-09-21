@@ -1,6 +1,7 @@
 import dbConnect from "../../../util/mongo";
 import { Link } from "../../../models/Link";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { strSmartTrim } from "../../../util/string";
 
 import axios from "axios";
 import cheerio from "cheerio";
@@ -20,7 +21,6 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const token = cookies.token;
 
   const link = req.body.link;
-
   dbConnect();
 
   if (method === "POST") {
@@ -34,22 +34,26 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       ];
 
       axios.get(link).then(({ data }) => {
-        const $ = cheerio.load(data);
-        const links = extractLinks($);
-
-        links.forEach((element) => {
+        //pega o link do req.body
+        const $ = cheerio.load(data); //carrega o link
+        const links = extractLinks($); //extrai os links
+        links.forEach((l) => {
           //Joga os links puxados para o DB
-          //Link.findOne(
-          //  { link: String(element) },
-          //  function (err: any, link: typeLink) {
-          //    if (err) return err;
-          //    console.log(link);
-          //  }
-          //);
-
-          const elLink = Link.findOne({ link: String(element) });
-
-          //Link.create({ link: String(element), label: "default" });
+          Link.findOne(
+            { link: String(l) },
+            function (err: any, links: typeLink) {
+              if (links === null || links.link !== l) {
+                //verifica se o link não existe, se não existe ele adiciona ao db
+                Link.create({
+                  link: String(l),
+                  label: strSmartTrim(String(l), 10),
+                });
+              } else {
+                console.log("Link já existe");
+              }
+              if (err) return err;
+            }
+          );
         });
         res
           .status(201)

@@ -47,7 +47,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       });
       res.status(200).json({
         links: link,
-        status: "Sucesso",
+        status: "success",
       });
     } catch (err) {
       res.status(401).json({

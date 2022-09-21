@@ -238,17 +238,16 @@ export function ImportLinkComponent() {
   const [link, setLink] = useState("");
   const router = useRouter();
 
-  const handleCreate = async (e: any) => {
+  const handleImport = async (e: any) => {
     e.preventDefault();
     try {
-      const newProduct = {
+      const importIt = {
         link,
       };
       const res = await axios.post(
         "http://localhost:3000/api/links/import",
-        newProduct
+        importIt
       );
-
       if (res.data.status === "success") {
         router.reload();
       }
@@ -259,7 +258,7 @@ export function ImportLinkComponent() {
 
   return (
     <Div width="80%" widthmd="25%">
-      <form onSubmit={handleCreate}>
+      <form onSubmit={handleImport}>
         <Div className="mb-3">
           <label className="form-label mb-1">Link</label>
           <input
