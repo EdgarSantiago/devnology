@@ -148,7 +148,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const linksRes = await axios.get(`http://localhost:3000/api/links`);
+  const linksRes = await axios.get(`${process.env.URL}/api/links`);
   const data = JSON.parse(JSON.stringify(linksRes.data));
   return {
     props: {

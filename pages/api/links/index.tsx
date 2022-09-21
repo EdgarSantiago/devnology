@@ -2,7 +2,7 @@ import dbConnect from "../../../util/mongo";
 import { Link } from "../../../models/Link";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { DataLinks, typeLink } from "../../../inteface/backend";
+import { DataLinks } from "../../../inteface/backend";
 
 export default async function handler(
   req: NextApiRequest,
