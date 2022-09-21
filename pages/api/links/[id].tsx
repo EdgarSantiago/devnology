@@ -4,10 +4,10 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import { DataOneLink } from "../../../inteface/backend";
 
-export default async (
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<DataOneLink>
-) => {
+) {
   const {
     method,
     query: { id },
@@ -72,4 +72,4 @@ export default async (
       });
     }
   }
-};
+}

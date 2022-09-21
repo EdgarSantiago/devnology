@@ -2,9 +2,12 @@ import dbConnect from "../../../util/mongo";
 import { Link } from "../../../models/Link";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { DataLinks } from "../../../inteface/backend";
+import { DataLinks, typeLink } from "../../../inteface/backend";
 
-export default async (req: NextApiRequest, res: NextApiResponse<DataLinks>) => {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<DataLinks>
+) {
   const { method, cookies } = req;
 
   const token = cookies.token;
@@ -34,4 +37,4 @@ export default async (req: NextApiRequest, res: NextApiResponse<DataLinks>) => {
       res.status(500).json(err);
     }
   }
-};
+}

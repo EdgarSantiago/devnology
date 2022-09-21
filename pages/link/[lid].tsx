@@ -133,7 +133,7 @@ const BlogPost = ({
 
 export default BlogPost;
 
-export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const id = params?.lid;
   const linksRes = await axios.get(`http://localhost:3000/api/links/${id}`);
   const data = JSON.parse(JSON.stringify(linksRes.data));
@@ -142,13 +142,13 @@ export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
   };
 };
 
-export const getStaticPaths: GetStaticPaths<any> = async () => {
+export const getStaticPaths: GetStaticPaths = async () => {
   const linksRes = await axios.get("http://localhost:3000/api/links");
   const data = JSON.parse(JSON.stringify(linksRes.data));
 
   const paths = data.links.map((link: typeLink) => {
     return {
-      params: { lid: String(link._id) },
+      params: { lid: link._id },
     };
   });
 

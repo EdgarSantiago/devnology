@@ -8,7 +8,10 @@ import cheerio from "cheerio";
 
 import { typeLink, DataLinks } from "../../../inteface/backend";
 
-export default async (req: NextApiRequest, res: NextApiResponse<DataLinks>) => {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<DataLinks>
+) {
   const { method, cookies } = req;
   const token = cookies.token;
 
@@ -55,4 +58,4 @@ export default async (req: NextApiRequest, res: NextApiResponse<DataLinks>) => {
       res.status(500).json(err);
     }
   }
-};
+}
