@@ -10,15 +10,17 @@ import { useState, useEffect } from "react";
 const SignIn: NextPage = () => {
   return (
     <Layout title="Entrar">
-      <Div className="container-fluid" height="100vh">
-        <Div className="row" height="100%">
+      <Div className="container-fluid" height="80vh">
+        <Div className="row" height="50%">
           <Div
-            className="col-7"
+            className="col-12 col-md-7"
+            height="20vh"
+            heightmd="100vh"
             style={{
               backgroundImage: "url(/bg.jpg)",
             }}
           />
-          <Div className="col-5 px-4 align-self-center">
+          <Div className="col-12 col-md-5 pt-3 pt-md-0 px-4 align-self-center">
             <h1 className="display-3 mb-5" style={{ color: "#4777e0" }}>
               Happening now
             </h1>

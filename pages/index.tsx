@@ -68,7 +68,7 @@ const Home: NextPage<Data> = (data) => {
     <Layout title="Início">
       <Div className="container p-3" style={{ minHeight: "100vh" }}>
         <Div className="row">
-          <Div className="col-12">
+          <Div className="col-12 d-inline d-md-flex">
             <h3>
               Seus links{" "}
               <span
@@ -86,7 +86,7 @@ const Home: NextPage<Data> = (data) => {
                 )}
               </span>
             </h3>
-            <h3>
+            <h3 className="ms-0 ms-md-3">
               Importar{" "}
               <span
                 className="btn btn-outline-danger py-0 px-1"
@@ -124,7 +124,7 @@ const Home: NextPage<Data> = (data) => {
             <Div
               className="row"
               initial={{ opacity: 0, height: "0px" }}
-              animate={{ height: "20vh", opacity: 1 }}
+              animate={{ height: "25vh", opacity: 1 }}
               exit={{ height: "0px", opacity: 0 }}
             >
               <ImportLinkComponent />
@@ -236,6 +236,7 @@ export function AddLinkComponent() {
 // componente para importar Links ao DB
 export function ImportLinkComponent() {
   const [link, setLink] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleImport = async (e: any) => {
@@ -249,7 +250,10 @@ export function ImportLinkComponent() {
         importIt
       );
       if (res.data.status === "success") {
-        router.reload();
+        setLoading(true);
+        setTimeout(() => {
+          router.reload();
+        }, 3000);
       }
     } catch (err) {
       console.log(err);
@@ -277,6 +281,7 @@ export function ImportLinkComponent() {
         >
           Importar
         </Btn>
+        {loading && <h4 className="text-danger">Importando links...</h4>}
       </form>
     </Div>
   );
