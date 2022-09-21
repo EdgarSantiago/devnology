@@ -28,7 +28,7 @@ const BlogPost = ({
         link: updateLink,
       };
       const res = await axios.put(
-        `http://localhost:3000/api/links/${_id}`,
+        `${process.env.URL}/api/links/${_id}`,
         productUpdate
       );
       console.log(res.data);
