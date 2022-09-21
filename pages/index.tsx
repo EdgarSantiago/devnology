@@ -13,19 +13,9 @@ import Swal from "sweetalert2";
 
 import { AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
 
-type typeLink = {
-  label: string;
-  link: string;
-  _id: string;
-  createdAt: string;
-  updatedAt: string;
-};
+import { typeLink, DataLinks } from "../inteface/frontend";
 
-interface Data {
-  links: typeLink[];
-}
-
-const Home: NextPage<Data> = (data) => {
+const Home: NextPage<DataLinks> = (data) => {
   const [close, setClose] = useState(false);
   const [close2, setClose2] = useState(false);
   const [linkList, setLinkList] = useState(data.links);
@@ -56,12 +46,6 @@ const Home: NextPage<Data> = (data) => {
     } catch (err) {
       console.log(err);
     }
-  };
-
-  const handleImport = async (e: any) => {
-    e.preventDefault();
-    await axios.post("http://localhost:3000/api/links/import");
-    router.reload();
   };
 
   return (

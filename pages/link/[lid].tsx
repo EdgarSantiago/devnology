@@ -9,17 +9,7 @@ import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import Link from "next/link";
 
-type typeLink = {
-  label: string;
-  link: string;
-  _id: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-interface Data {
-  links: typeLink;
-}
+import { typeLink } from "../../inteface/frontend";
 
 const BlogPost = ({
   label = "This is the default title",
@@ -41,7 +31,8 @@ const BlogPost = ({
         `http://localhost:3000/api/links/${_id}`,
         productUpdate
       );
-      if (res.data.status === "sucesso") {
+      console.log(res.data);
+      if (res.data.status === "success") {
         router.push(`/`);
       }
     } catch (err) {

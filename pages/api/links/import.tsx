@@ -6,17 +6,9 @@ import { strSmartTrim } from "../../../util/string";
 import axios from "axios";
 import cheerio from "cheerio";
 
-type typeLink = {
-  label: string;
-  link: string;
-};
+import { typeLink, DataLinks } from "../../../inteface/backend";
 
-interface Data {
-  links: typeLink[];
-  status: string;
-}
-
-export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+export default async (req: NextApiRequest, res: NextApiResponse<DataLinks>) => {
   const { method, cookies } = req;
   const token = cookies.token;
 

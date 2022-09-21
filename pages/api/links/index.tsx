@@ -2,17 +2,9 @@ import dbConnect from "../../../util/mongo";
 import { Link } from "../../../models/Link";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-type typeLink = {
-  label: string;
-  link: string;
-};
+import { DataLinks } from "../../../inteface/backend";
 
-interface Data {
-  links: typeLink[];
-  status: string;
-}
-
-export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+export default async (req: NextApiRequest, res: NextApiResponse<DataLinks>) => {
   const { method, cookies } = req;
 
   const token = cookies.token;

@@ -2,17 +2,12 @@ import dbConnect from "../../../util/mongo";
 import { Link } from "../../../models/Link";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-type typeLink = {
-  label: string;
-  link: string;
-};
+import { DataOneLink } from "../../../inteface/backend";
 
-interface Data {
-  links: typeLink;
-  status: string;
-}
-
-export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+export default async (
+  req: NextApiRequest,
+  res: NextApiResponse<DataOneLink>
+) => {
   const {
     method,
     query: { id },
@@ -28,7 +23,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       res.status(200).json(link);
     } catch (err) {
       res.status(401).json({
-        links: { label: "", link: "" },
+        link: { label: "", link: "" },
         status: "item Deletado",
       });
     }
@@ -37,7 +32,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   if (method === "PUT") {
     if (!token || token !== process.env.TOKEN) {
       return res.status(401).json({
-        links: { label: "", link: "" },
+        link: { label: "", link: "" },
         status: "Não autorizado",
       });
     }
@@ -46,12 +41,12 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         new: true,
       });
       res.status(200).json({
-        links: link,
+        link: link,
         status: "success",
       });
     } catch (err) {
       res.status(401).json({
-        links: { label: "", link: "" },
+        link: { label: "", link: "" },
         status: "Falha",
       });
     }
@@ -60,19 +55,19 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   if (method === "DELETE") {
     if (!token || token !== process.env.TOKEN) {
       return res.status(401).json({
-        links: { label: "", link: "" },
+        link: { label: "", link: "" },
         status: "Não autorizado",
       });
     }
     try {
       await Link.findByIdAndDelete(id);
       res.status(200).json({
-        links: { label: "", link: "" },
+        link: { label: "", link: "" },
         status: "item Deletado",
       });
     } catch (err) {
       res.status(401).json({
-        links: { label: "", link: "" },
+        link: { label: "", link: "" },
         status: "Falha ao delete",
       });
     }
