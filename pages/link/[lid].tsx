@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useState, useEffect } from "react";
 import type { NextPage } from "next";
 import type { GetStaticProps, GetStaticPaths } from "next";
 import axios from "axios";
@@ -9,16 +9,34 @@ import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import Link from "next/link";
 
+import { Link as ModelLink } from "../../models/Link";
+
 import { typeLink } from "../../inteface/frontend";
 
 const BlogPost = ({
   label = "This is the default title",
   link = "somelink",
-  _id,
 }: typeLink): ReactElement => {
+  const router = useRouter();
   const [title, setTitle] = useState(label);
   const [updateLink, setUpdateLink] = useState(link);
-  const router = useRouter();
+  const [id, setId] = useState(link);
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    const lid = router.query.lid;
+    const fetchData = async () => {
+      const data = await axios.get(`/api/links/${lid}`);
+      return data;
+    };
+    fetchData()
+      .then((res) => {
+        setTitle(res.data.label);
+        setUpdateLink(res.data.link);
+        setId(res.data._id);
+      })
+      .catch(console.error);
+  }, []);
 
   const handleUpdate = async (e: any) => {
     e.preventDefault();
@@ -27,14 +45,11 @@ const BlogPost = ({
         label: title,
         link: updateLink,
       };
-      const res = await axios.put(
-        `${process.env.URL}/api/links/${_id}`,
-        productUpdate
-      );
-      console.log(res.data);
-      if (res.data.status === "success") {
-        router.push(`/`);
-      }
+      await axios.put(`/api/links/${id}`, productUpdate).then((res) => {
+        if (res.data.status === "success") {
+          router.push("/");
+        }
+      });
     } catch (err) {
       console.log(err);
     }
@@ -55,8 +70,12 @@ const BlogPost = ({
         },
       }).then((result) => {
         if (result.isConfirmed) {
-          axios.delete("http://localhost:3000/api/links/" + id);
-          router.push(`/`);
+          axios.delete(`/api/links/${id}`).then((res) => {
+            console.log(res);
+            if (res.data.status === "item Deletado") {
+              router.push("/");
+            }
+          });
         } else if (result.isDenied) {
           Swal.fire("O link não foi deletado", "", "info");
         }
@@ -108,7 +127,7 @@ const BlogPost = ({
                 br="15px"
                 bg="#eb5050"
                 border="1px solid #14131352 !important"
-                onClick={() => handleDelete(_id)}
+                onClick={() => handleDelete(id)}
               >
                 Deletar
               </Btn>
@@ -132,31 +151,3 @@ const BlogPost = ({
 };
 
 export default BlogPost;
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  console.log(params);
-  const id = params?.lid;
-  const linksRes = await axios.get(`${process.env.URL}/api/links/${id}`);
-  const data = JSON.parse(JSON.stringify(linksRes.data));
-  return {
-    props: { label: data.label, link: data.link, _id: data._id },
-  };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const linksRes = await axios.get(`${process.env.URL}/api/links`);
-  const data = JSON.parse(JSON.stringify(linksRes.data));
-
-  const paths = data.links.map((link: typeLink) => {
-    return {
-      params: { lid: link._id },
-    };
-  });
-
-  console.log(paths);
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
