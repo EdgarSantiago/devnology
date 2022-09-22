@@ -148,7 +148,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const linksRes = await axios.get(`http://localhost:3000/api/links`);
+  const linksRes = await axios.get(`/api/links`);
   const data = JSON.parse(JSON.stringify(linksRes.data));
   return {
     props: {
@@ -171,10 +171,7 @@ export function AddLinkComponent() {
         label,
         link,
       };
-      const res = await axios.post(
-        "http://localhost:3000/api/links",
-        newProduct
-      );
+      const res = await axios.post("/api/links", newProduct);
 
       if (res.data.status === "success") {
         router.push(`/link/${res.data.links._id}`);
