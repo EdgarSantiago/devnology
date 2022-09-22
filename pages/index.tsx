@@ -222,16 +222,16 @@ export function ImportLinkComponent() {
 
   const handleImport = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const importIt = {
         link,
       };
       const res = await axios.post(`/api/links/import`, importIt);
-      setLoading(true);
       if (res.data.status === "success") {
         setTimeout(() => {
-          router.reload();
-        }, 5000);
+          router.push("/");
+        }, 2000);
       }
     } catch (err) {
       console.log(err);
