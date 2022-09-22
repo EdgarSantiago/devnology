@@ -227,8 +227,8 @@ export function ImportLinkComponent() {
         link,
       };
       const res = await axios.post(`/api/links/import`, importIt);
+      setLoading(true);
       if (res.data.status === "success") {
-        setLoading(true);
         setTimeout(() => {
           router.reload();
         }, 5000);
