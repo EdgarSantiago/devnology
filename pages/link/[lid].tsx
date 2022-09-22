@@ -46,6 +46,7 @@ const BlogPost = ({
         link: updateLink,
       };
       await axios.put(`/api/links/${id}`, productUpdate).then((res) => {
+        console.log(res);
         if (res.data.status === "success") {
           router.push("/");
         }
@@ -55,7 +56,8 @@ const BlogPost = ({
     }
   };
 
-  const handleDelete = async (id?: string) => {
+  const handleDelete = async (e: any, id?: string) => {
+    e.preventDefault();
     try {
       Swal.fire({
         title: "Você quer deletar esse link?",
@@ -127,7 +129,7 @@ const BlogPost = ({
                 br="15px"
                 bg="#eb5050"
                 border="1px solid #14131352 !important"
-                onClick={() => handleDelete(id)}
+                onClick={(e) => handleDelete(e, id)}
               >
                 Deletar
               </Btn>
