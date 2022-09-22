@@ -148,7 +148,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
-  const linksRes = await axios.get(`/api/links`);
+  const linksRes = await axios.get(`https://devnology.vercel.app/api/links`);
   const data = JSON.parse(JSON.stringify(linksRes.data));
   return {
     props: {
