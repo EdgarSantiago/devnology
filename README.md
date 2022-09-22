@@ -37,7 +37,7 @@ senha: admin
 Utilizei nextjs + typescript para fazer o frontend e o backend, não é a melhor opção para esse projeto
 mas utilizei pra terminar o mais rápido possível. O app tem tudo que o exercício pede + um sistema de login. Para o banco de dados utilizei o mongodb mas tambem seria possível com outro banco de dados. Para estilizar utilizei bootstrap + styled-components + framer motion.
 
-Da para importar links de um site, por exemplo https://devgo.com.br/, o backend puxa todos os atribudos HREF das tags <a>, e manda pro banco de dados. Tambem é possível adicionar, deletar e atualizar os links tudo dentro.
+Da para importar links de um site, por exemplo https://devgo.com.br/, o backend puxa todos os atribudos HREF das tags <a>, e manda pro banco de dados. Tambem é possível adicionar, deletar e atualizar os links.
 
 ## Problemas
 
