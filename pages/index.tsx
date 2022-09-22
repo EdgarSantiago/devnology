@@ -108,7 +108,7 @@ const Home: NextPage<DataLinks> = (data) => {
             <Div
               className="row"
               initial={{ opacity: 0, height: "0px" }}
-              animate={{ height: "25vh", opacity: 1 }}
+              animate={{ height: "22vh", opacity: 1 }}
               exit={{ height: "0px", opacity: 0 }}
             >
               <ImportLinkComponent />
@@ -231,7 +231,7 @@ export function ImportLinkComponent() {
         setLoading(true);
         setTimeout(() => {
           router.reload();
-        }, 3000);
+        }, 5000);
       }
     } catch (err) {
       console.log(err);
@@ -247,7 +247,7 @@ export function ImportLinkComponent() {
             type="text"
             className="form-control py-1"
             onChange={(e) => setLink(e.target.value)}
-            placeholder="Exemplo: https://devgo.com.br/"
+            placeholder="Exemplo: https://siteparaimportaraqui.com"
           />
         </Div>
         <Btn
