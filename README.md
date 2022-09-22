@@ -19,14 +19,15 @@ npm install
 npm run dev
 
 Configure o .env com:
-MONGO_URL
-ADMIN_USERNAME
-ADMIN_PASSWORD
-TOKEN
+
+- MONGO_URL
+- ADMIN_USERNAME
+- ADMIN_PASSWORD
+- TOKEN
 
 ## DEMO
 
-https://devnology.vercel.app/signin
+https://devnology.vercel.app
 
 login: admin
 senha: admin
